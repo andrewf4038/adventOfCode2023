@@ -1,6 +1,7 @@
 const utils = require("../utils/utils")
 
-const lines = utils.splitByLine("day1_part2.txt")
+
+const lines = utils.splitByLine("./Files/day1_part2.txt")
 const firstNumbers = [];
 const lastNumbers = [];
 
@@ -28,7 +29,7 @@ lines.forEach((line, lineIndex) => {
 console.log(finalNumberCalc(firstNumbers, lastNumbers));
 
 // ----Part 2----
-const linesPtTwo = utils.splitByLine("day1_part2.txt");
+const linesPtTwo = utils.splitByLine("./Files/day1_part2.txt");
 const firstNumbersPtTwo = [];
 const lastNumbersPtTwo = [];
 
