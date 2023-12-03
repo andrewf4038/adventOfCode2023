@@ -35,7 +35,6 @@ linesPtTwo.forEach((line, lineIndex) => {
     const foundStringNums = utils.spelledNumberFinder(line);
     foundStringNums.forEach((stringNum) => {
         line = line.replaceAll(stringNum, utils.stringToNumber(stringNum));
-        console.log(origLine, " ", line, " ", foundStringNums)
     })
     findFirstandLastNumbers(firstNumbersPtTwo, lastNumbersPtTwo, line, lineIndex)
     // console.log(origLine, "-", line, "-", firstNumbersPtTwo[lineIndex], "-", lastNumbersPtTwo[lineIndex], "-", firstNumbersPtTwo[lineIndex] + lastNumbersPtTwo[lineIndex])
