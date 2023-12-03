@@ -1,10 +1,8 @@
 const utils = require("../utils/utils")
 
-
-const lines = utils.splitByLine("./Files/day1_part2.txt")
+const lines = utils.splitByLine("./Files/part1.txt")
 const firstNumbers = [];
 const lastNumbers = [];
-
 
 function findFirstandLastNumbers(firstArray, lastArray, line, lineIndex) {
     const foundNumbers = utils.numberFinder(line);
@@ -25,11 +23,10 @@ lines.forEach((line, lineIndex) => {
     findFirstandLastNumbers(firstNumbers, lastNumbers, line, lineIndex)
 })
 
-
 console.log(finalNumberCalc(firstNumbers, lastNumbers));
 
 // ----Part 2----
-const linesPtTwo = utils.splitByLine("./Files/day1_part2.txt");
+const linesPtTwo = utils.splitByLine("./Files/part2.txt");
 const firstNumbersPtTwo = [];
 const lastNumbersPtTwo = [];
 
