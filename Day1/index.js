@@ -1,4 +1,3 @@
-const fs = require("fs");
 const utils = require("../utils/utils")
 
 const lines = utils.splitByLine("./Files/part1.txt")
