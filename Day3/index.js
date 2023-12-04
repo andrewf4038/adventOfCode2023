@@ -89,7 +89,6 @@ starLocations.forEach(star => {
         //charLocations.some(arr => JSON.stringify(arr) === JSON.stringify(pos))
     })
 })
-console.log(numsMatchedtoStars)
 
 let ptFinal = 0;
 numsMatchedtoStars.forEach((match, matchIndex) => {
