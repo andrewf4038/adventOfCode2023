@@ -1,3 +1,4 @@
+const fs = require("fs");
 const utils = require("../utils/utils")
 
 const lines = utils.splitByLine("./Files/part1.txt")
@@ -29,15 +30,22 @@ console.log(finalNumberCalc(firstNumbers, lastNumbers));
 const linesPtTwo = utils.splitByLine("./Files/part2.txt");
 const firstNumbersPtTwo = [];
 const lastNumbersPtTwo = [];
-
 linesPtTwo.forEach((line, lineIndex) => {
-    const origLine = line;
-    const foundStringNums = utils.spelledNumberFinder(line);
-    foundStringNums.forEach((stringNum) => {
-        line = line.replaceAll(stringNum, utils.stringToNumber(stringNum));
-    })
-    findFirstandLastNumbers(firstNumbersPtTwo, lastNumbersPtTwo, line, lineIndex)
-    // console.log(origLine, "-", line, "-", firstNumbersPtTwo[lineIndex], "-", lastNumbersPtTwo[lineIndex], "-", firstNumbersPtTwo[lineIndex] + lastNumbersPtTwo[lineIndex])
+    const foundStringNums = [...utils.spelledNumberFinder(line)];
+    let forwardLine = "";
+    let backwardLine = "";
+    if (foundStringNums.length > 0) {
+        forwardLine = line.replaceAll(foundStringNums[0][1], utils.stringToNumber(foundStringNums[0][1]));
+        backwardLine = line.replaceAll(foundStringNums[foundStringNums.length - 1][1], utils.stringToNumber(foundStringNums[foundStringNums.length - 1][1]))
+    } else {
+        forwardLine = line;
+        backwardLine = line;
+    }
+
+    firstNumbersPtTwo[lineIndex] = utils.numberFinder(forwardLine)[0];
+    const backwardFoundNumbers = utils.numberFinder(backwardLine);
+    lastNumbersPtTwo[lineIndex] = backwardFoundNumbers[backwardFoundNumbers.length - 1]
 })
 
 console.log(finalNumberCalc(firstNumbersPtTwo, lastNumbersPtTwo));
+

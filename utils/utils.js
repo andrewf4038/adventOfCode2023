@@ -14,7 +14,7 @@ const numberFinder = (input) => {
 }
 
 const spelledNumberFinder = (input) => {
-    const result = input.match(/(?:zero|one|two|three|four|five|six|seven|eight|nine)/g);
+    const result = input.matchAll(/(?=(one|two|three|four|five|six|seven|eight|nine))/gm);
     return result ? result : [];
 }
 
