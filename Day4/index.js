@@ -1,4 +1,3 @@
-const { register } = require("module");
 const utils = require("../utils/utils");
 const lines = utils.splitByLine("./Files/part2.txt");
 
