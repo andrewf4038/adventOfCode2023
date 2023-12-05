@@ -6,6 +6,12 @@ const splitByLine = (inputText) => {
     return splitText;
 }
 
+const splitByBlock = (inputText) => {
+    const text = fs.readFileSync(inputText, encoding = "utf8");
+    const splitText = text.split("\n\n");
+    return splitText;
+}
+
 const numberFinder = (input) => {
     const result = input.match(/\d/g);
     if (result) {
@@ -60,6 +66,7 @@ const stringToNumber = (input) => {
 
 
 module.exports.splitByLine = splitByLine;
+module.exports.splitByBlock = splitByBlock;
 module.exports.stringToNumber = stringToNumber;
 module.exports.numberFinder = numberFinder;
 module.exports.spelledNumberFinder = spelledNumberFinder;
