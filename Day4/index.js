@@ -25,4 +25,4 @@ lines.forEach((line, lineIndex) => {
 console.log(ptOneTotal)
 
 const sumPt2 = cardCount.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-console.log(sumPt2); // Output: 15
+console.log(sumPt2);
