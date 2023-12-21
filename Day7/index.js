@@ -1,6 +1,4 @@
-const { fork } = require("child_process");
 const utils = require("../utils/utils");
-const { ifError } = require("assert");
 const lines = utils.splitByLine("./Files/part1.txt");
 const hands = [];
 lines.forEach(line => {
