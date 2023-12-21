@@ -1,6 +1,6 @@
 const { fork } = require("child_process");
 const utils = require("../utils/utils");
-const lines = utils.splitByLine("./Files/part1.txt");
+const lines = utils.splitByLine("./Files/part1_test.txt");
 const hands = [];
 lines.forEach(line => {
     const handsAndBids = line.split(" ");
@@ -10,26 +10,22 @@ lines.forEach(line => {
     });
 })
 
-const test = "1212asdf";
-
-
-
 function cardMatches(numResults) {
     switch (numResults) {
-        case 1: //high card
-            return 0;
+        case 1:
+            return 0; //high card
             break;
         case 2:
-            return 1;
+            return 1; // one pair
             break;
         case 3:
-            return 3;
+            return 3; //three of a kind
             break;
         case 4:
-            return 5;
+            return 5; // four of a kind
             break;
         case 5:
-            return 6;
+            return 6; // five of a kind
             break;
         default:
             break;
@@ -44,11 +40,6 @@ function typer(hand, type = 0) {
     const oneCharRegex = new RegExp(oneChar, "g");
     const results = [...hand.matchAll(oneCharRegex)];
     type += cardMatches(results.length);
-    // console.log("hand ", hand);
-    // console.log("results.length ", results.length);
-    // console.log("cardMatches result ", cardMatches(results.length))
-    // console.log("type ", type);
-    // console.log("\n");
     return typer(hand.replaceAll(oneChar, ""), type);
 
 }
@@ -75,18 +66,46 @@ function sortHands(a, b) {
 }
 
 // const newSort = hands.sort((a, b) => a.type - b.type);
-const orderedHands = hands.sort(sortHands);
+const orderedHands = [...hands];
+orderedHands.sort(sortHands)
 
 let pt1Result = 0;
 orderedHands.forEach((hand, index) => {
     pt1Result += hand.bid * (index + 1);
 })
 
-console.log(pt1Result)
+// console.log(pt1Result)
 
+// PT 2
+hands.forEach(hand => { // Start by getting the card order with the replace corrected where J is the lowest.
+    hand.hand = hand.hand.replaceAll("C", "1")
+})
 
-// Regex to set the type
-// function to get all card values
-// some kind of sorting alg 
-// Is it an initial sort and then a fine tune? Probably a fine tune.
-// We can create an object and store type and an array of values, that would help to order.
+function typer2(hand, type = 0, jCount = 0) {
+    if (hand === "") {
+        switch (type) {
+            case 0: //no matches then we add the count. This falls apart when there are multiple J in a hand.
+                return type + jCount;
+                break;
+            case 1:
+                return type + jCount;
+                break;
+            default:
+                break;
+        }
+
+        return type;
+    }
+    const oneChar = hand[0];
+    const oneCharRegex = new RegExp(oneChar, "g");
+    const results = [...hand.matchAll(oneCharRegex)];
+    if (oneChar === "1") {
+        jCount += results.length;
+        return typer(hand.replaceAll(oneChar, ""), type);
+    }
+    type += cardMatches(results.length);
+    return typer(hand.replaceAll(oneChar, ""), type);
+
+}
+
+console.log(hands);
