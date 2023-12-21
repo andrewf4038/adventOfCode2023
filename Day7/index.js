@@ -1,6 +1,7 @@
 const { fork } = require("child_process");
 const utils = require("../utils/utils");
-const lines = utils.splitByLine("./Files/part1_test.txt");
+const { ifError } = require("assert");
+const lines = utils.splitByLine("./Files/part1.txt");
 const hands = [];
 lines.forEach(line => {
     const handsAndBids = line.split(" ");
@@ -45,7 +46,6 @@ function typer(hand, type = 0) {
 }
 
 hands.forEach(hand => {
-    let type = 0;
     hand.type = typer(hand.hand);
 })
 
@@ -74,22 +74,49 @@ orderedHands.forEach((hand, index) => {
     pt1Result += hand.bid * (index + 1);
 })
 
-// console.log(pt1Result)
+console.log(pt1Result)
 
 // PT 2
-hands.forEach(hand => { // Start by getting the card order with the replace corrected where J is the lowest.
+hands2 = [...hands];
+hands2.forEach(hand => { // Start by getting the card order with the replace corrected where J is the lowest.
     hand.hand = hand.hand.replaceAll("C", "1")
+    hand.type = typer2(hand.hand);
 })
 
 function typer2(hand, type = 0, jCount = 0) {
     if (hand === "") {
-        switch (type) {
-            case 0: //no matches then we add the count. This falls apart when there are multiple J in a hand.
-                return type + jCount;
+        switch (jCount) {
+            case 0: //no jokers, type is unchanged
+                return type;
                 break;
-            case 1:
-                return type + jCount;
+            // high(0), one pair (1), two pair (2), three of a kind (3), full house(4), four of a kind(5), five of a kind (6)
+            case 1: // one joker. 0-1, 1->3, 2->4, 3->5, 5->6
+                if (type === 0 || type === 5) {
+                    return type + 1;
+                    break;
+                } else {
+                    return type + 2;
+                    break;
+                }
+            case 2: // two jokers. 0->3, 1->5, 3->6
+                if (type === 1) {
+                    return type + 4;
+                    break;
+                } else {
+                    return type + 3;
+                    break
+
+                }
+            case 3: // three jokers. 0->5, 1->6
+                return type + 5;
                 break;
+            case 4: // four jokers. 0->6
+                return 6;
+                break;
+            case 5: //five jokers. 0->6
+                return 6;
+                break;
+
             default:
                 break;
         }
@@ -101,11 +128,18 @@ function typer2(hand, type = 0, jCount = 0) {
     const results = [...hand.matchAll(oneCharRegex)];
     if (oneChar === "1") {
         jCount += results.length;
-        return typer(hand.replaceAll(oneChar, ""), type);
+        return typer2(hand.replaceAll(oneChar, ""), type, jCount);
     }
     type += cardMatches(results.length);
-    return typer(hand.replaceAll(oneChar, ""), type);
-
+    return typer2(hand.replaceAll(oneChar, ""), type, jCount);
 }
 
-console.log(hands);
+const orderedHands2 = [...hands2];
+orderedHands2.sort(sortHands)
+
+let pt2Result = 0;
+orderedHands2.forEach((hand, index) => {
+    pt2Result += hand.bid * (index + 1);
+})
+
+console.log(pt2Result)
